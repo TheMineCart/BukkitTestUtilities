@@ -24,11 +24,13 @@ import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 
 public class TestServer implements Server {
 
     Map<String, World> worlds = newHashMap();
+    List<Player> onlinePlayers = newArrayList();
 
     public void addWorld(World world) {
         worlds.put(world.getName(), world);
@@ -51,7 +53,11 @@ public class TestServer implements Server {
 
     @Override
     public Player[] getOnlinePlayers() {
-        return new Player[0];  
+        return (Player[]) onlinePlayers.toArray();
+    }
+
+    public void addOnlinePlayer(Player player) {
+        onlinePlayers.add(player);
     }
 
     @Override
