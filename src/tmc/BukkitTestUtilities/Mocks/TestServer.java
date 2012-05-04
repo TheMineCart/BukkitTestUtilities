@@ -1,6 +1,7 @@
 package tmc.BukkitTestUtilities.Mocks;
 
 import com.avaje.ebean.config.ServerConfig;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
@@ -30,7 +31,7 @@ import static com.google.common.collect.Maps.newHashMap;
 public class TestServer implements Server {
 
     Map<String, World> worlds = newHashMap();
-    List<Player> onlinePlayers = newArrayList();
+    TestPlayer[] onlinePlayerArray = {};
 
     public void addWorld(World world) {
         worlds.put(world.getName(), world);
@@ -53,11 +54,11 @@ public class TestServer implements Server {
 
     @Override
     public Player[] getOnlinePlayers() {
-        return (Player[]) onlinePlayers.toArray();
+        return onlinePlayerArray;
     }
 
-    public void addOnlinePlayer(Player player) {
-        onlinePlayers.add(player);
+    public void addOnlinePlayer(TestPlayer player) {
+        onlinePlayerArray = (TestPlayer[]) ArrayUtils.addAll(onlinePlayerArray, new TestPlayer[]{player});
     }
 
     @Override

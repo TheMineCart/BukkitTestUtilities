@@ -30,6 +30,7 @@ public class TestPlayer implements Player {
     private boolean op = false;
     private ItemStack itemStack = new ItemStack(Material.STICK);
     private String name = "John";
+    private InetSocketAddress address = new InetSocketAddress("127.0.0.1", 22565);
 
     public TestPlayer() {
 
@@ -84,7 +85,11 @@ public class TestPlayer implements Player {
 
     @Override
     public InetSocketAddress getAddress() {
-        return null;  
+        return address;
+    }
+
+    public void setAddress(InetSocketAddress address) {
+        this.address = address;
     }
 
     @Override
