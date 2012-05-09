@@ -163,12 +163,17 @@ public class TestServer implements Server {
 
     @Override
     public Player getPlayer(String s) {
+        for(Player player: onlinePlayerArray) {
+            if(player.getName().equals(s)){
+                return player;
+            }
+        }
         return null;  
     }
 
     @Override
     public Player getPlayerExact(String s) {
-        return null;  
+        return getPlayer(s);
     }
 
     @Override
