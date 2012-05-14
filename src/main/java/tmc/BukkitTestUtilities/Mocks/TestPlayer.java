@@ -24,9 +24,11 @@ import org.bukkit.util.Vector;
 import java.net.InetSocketAddress;
 import java.util.*;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 @SuppressWarnings("deprecation")
 public class TestPlayer implements Player {
-    private String message = null;
+    private List<String> messages = newArrayList();
     private boolean op = false;
     private ItemStack itemStack = new ItemStack(Material.STICK);
     private String name = "John";
@@ -50,7 +52,22 @@ public class TestPlayer implements Player {
     }
 
     public String getMessage() {
-        return message;
+        if(messages.isEmpty()) return null;
+
+        return messages.get(0);
+    }
+
+    public String getMessage(int index) {
+        if(messages.isEmpty()) return null;
+        return messages.get(index);
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public void clearMessages() {
+        messages.clear();
     }
 
     @Override
@@ -384,12 +401,12 @@ public class TestPlayer implements Player {
 
     @Override
     public void sendMessage(String s) {
-        this.message = s;
+        this.messages.add(s);
     }
 
     @Override
     public void sendMessage(String[] strings) {
-
+        Collections.addAll(messages, strings);
     }
 
     @Override
