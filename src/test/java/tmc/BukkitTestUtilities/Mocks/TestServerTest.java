@@ -41,4 +41,11 @@ public class TestServerTest {
         assertThat(server.getPlayer("Jason"), nullValue());
         assertThat(server.getPlayerExact("Jason"), nullValue());
     }
+
+    @Test
+    public void shouldBeAbleToAddOfflinePlayers() {
+        server.addOfflinePlayer(new TestOfflinePlayer("Jason"));
+        assertThat(server.getOfflinePlayers().length, is(1));
+        assertThat(server.getOfflinePlayers()[0].getName(), is("Jason"));
+    }
 }

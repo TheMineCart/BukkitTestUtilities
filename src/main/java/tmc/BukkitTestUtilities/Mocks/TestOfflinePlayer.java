@@ -17,6 +17,10 @@ public class TestOfflinePlayer implements OfflinePlayer {
     private String name = "A Player";
     private Player player = new TestPlayer(name);
 
+    public TestOfflinePlayer(String playerName) {
+        name = playerName;
+    }
+
     @Override
     public boolean isOnline() {
         return online;

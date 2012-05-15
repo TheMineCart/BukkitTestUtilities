@@ -27,11 +27,17 @@ import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.intersection;
+import static com.google.common.collect.Sets.newHashSet;
 
 public class TestServer implements Server {
 
+    private String serverName = "Test Server";
+    private boolean whitelist = false;
+
     Map<String, World> worlds = newHashMap();
     TestPlayer[] onlinePlayerArray = {};
+    TestOfflinePlayer[] offlinePlayerArray = {};
 
     public void addWorld(World world) {
         worlds.put(world.getName(), world);
@@ -39,7 +45,11 @@ public class TestServer implements Server {
 
     @Override
     public String getName() {
-        return null;  
+        return serverName;
+    }
+
+    public void setName(String name) {
+        serverName = name;
     }
 
     @Override
@@ -83,7 +93,7 @@ public class TestServer implements Server {
 
     @Override
     public String getServerName() {
-        return null;  
+        return serverName;
     }
 
     @Override
@@ -113,17 +123,21 @@ public class TestServer implements Server {
 
     @Override
     public boolean hasWhitelist() {
-        return false;  
+        return whitelist;
     }
 
     @Override
     public void setWhitelist(boolean b) {
-        
+        whitelist = b;
     }
 
     @Override
     public Set<OfflinePlayer> getWhitelistedPlayers() {
-        return null;  
+        HashSet<OfflinePlayer> offlinePlayers = newHashSet();
+        for(TestOfflinePlayer player : offlinePlayerArray) {
+            if(player.isWhitelisted()) offlinePlayers.add(player);
+        }
+        return offlinePlayers;
     }
 
     @Override
@@ -333,7 +347,14 @@ public class TestServer implements Server {
 
     @Override
     public OfflinePlayer getOfflinePlayer(String s) {
+        for(OfflinePlayer player : offlinePlayerArray) {
+            if(player.getName().equals(s)) return player;
+        }
         return null;  
+    }
+
+    public void addOfflinePlayer(OfflinePlayer player) {
+        offlinePlayerArray = (TestOfflinePlayer[]) ArrayUtils.add(offlinePlayerArray, player);
     }
 
     @Override
@@ -353,12 +374,20 @@ public class TestServer implements Server {
 
     @Override
     public Set<OfflinePlayer> getBannedPlayers() {
-        return null;  
+        HashSet<OfflinePlayer> bannedPlayers = newHashSet();
+        for(OfflinePlayer player : offlinePlayerArray) {
+            if(player.isBanned()) bannedPlayers.add(player);
+        }
+        return bannedPlayers;
     }
 
     @Override
     public Set<OfflinePlayer> getOperators() {
-        return null;  
+        HashSet<OfflinePlayer> oppedPlayers = newHashSet();
+        for(OfflinePlayer player : offlinePlayerArray) {
+            if(player.isOp()) oppedPlayers.add(player);
+        }
+        return oppedPlayers;
     }
 
     @Override
@@ -383,7 +412,7 @@ public class TestServer implements Server {
 
     @Override
     public OfflinePlayer[] getOfflinePlayers() {
-        return new OfflinePlayer[0];  
+        return offlinePlayerArray;
     }
 
     @Override
