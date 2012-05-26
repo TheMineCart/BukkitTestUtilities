@@ -33,6 +33,7 @@ public class TestPlayer implements Player {
     private ItemStack itemStack = new ItemStack(Material.STICK);
     private String name = "John";
     private InetSocketAddress address = new InetSocketAddress("127.0.0.1", 22565);
+    private Server server = new TestServer();
 
     public TestPlayer() {
 
@@ -72,7 +73,7 @@ public class TestPlayer implements Player {
 
     @Override
     public String getDisplayName() {
-        return null;  
+        return name;
     }
 
     @Override
@@ -786,7 +787,11 @@ public class TestPlayer implements Player {
 
     @Override
     public Server getServer() {
-        return null;  
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 
     @Override
